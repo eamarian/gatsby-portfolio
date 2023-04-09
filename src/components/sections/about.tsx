@@ -3,18 +3,17 @@ import sr, { srConfig } from "../../utils/sr";
 import { usePrefersReducedMotion } from "../../hooks";
 
 export default ((): React.ReactElement => {
-  const revealContainer: React.RefObject<HTMLElement> =
-    useRef<HTMLElement>(null);
+  const revealSection: React.RefObject<HTMLElement> = useRef<HTMLElement>(null);
   const prefersReducedMotion: boolean = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (!prefersReducedMotion && sr && revealContainer.current) {
-      sr.reveal(revealContainer.current, srConfig());
+    if (!prefersReducedMotion && sr && revealSection.current) {
+      sr.reveal(revealSection.current, srConfig());
     }
   }, []);
 
   return (
-    <section id="about" ref={revealContainer}>
+    <section id="about" ref={revealSection}>
       <h1>About Me</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, iusto
