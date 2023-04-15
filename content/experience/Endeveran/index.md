@@ -1,10 +1,10 @@
 ---
 date: "2016-05-14"
-title: "Implementation Consultant"
+title: "Software Developer Intern"
 company: "Endeveran Corp"
-location: "Edina, MN"
-range: "May 2016 - September 2016"
-url: "https://www.fastenterprises.com/"
+location: "Lakeville, MN"
+range: "Summer 2016"
+url: "https://endeveran.my.salesforce-sites.com/"
 ---
 
 - Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum non omnis facilis similique veniam corporis perspiciatis in eveniet mollitia minus animi voluptatum earum, cumque dolorum ab nemo. Dolorem, voluptatum laboriosam!

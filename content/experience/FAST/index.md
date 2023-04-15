@@ -3,7 +3,7 @@ date: "2017-06-12"
 title: "Implementation Consultant"
 company: "FAST Enterprises"
 location: "Lansing, MI"
-range: "2017 - Present"
+range: "June 2017 - Present"
 url: "https://www.fastenterprises.com/"
 ---
 

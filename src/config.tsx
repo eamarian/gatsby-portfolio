@@ -21,3 +21,5 @@ export const navLinks: navLink[] = [
     url: "/#contact",
   },
 ];
+
+export const email: string = "eamarian@gmail.com";

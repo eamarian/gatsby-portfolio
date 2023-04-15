@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { email } from "../../config";
 import sr, { srConfig } from "../../utils/sr";
 import { usePrefersReducedMotion } from "../../hooks";
 
@@ -19,6 +20,7 @@ export default ((): React.ReactElement => {
         debitis, alias tenetur distinctio totam a animi ipsam magni ullam cum
         consectetur nesciunt id quae recusandae ea temporibus itaque!
       </p>
+      <a href={`mailto:${email}`}>Send Email</a>
     </section>
   );
 }) as React.FunctionComponent;

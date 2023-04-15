@@ -42,7 +42,23 @@ export default ((): React.ReactElement => {
       <h1>Experience</h1>
       <ol>
         {experienceData.map(({ node }: any, i: number) => {
-          return <li key={i}>{node.frontmatter.company}</li>;
+          const { frontmatter, html } = node;
+          const { title, url, company, range } = frontmatter;
+          return (
+            <li key={i}>
+              <h3>
+                <span>{title}</span>
+                {" @ "}
+                <span>
+                  <a href={url}>{company}</a>
+                </span>
+              </h3>
+
+              <p>{range}</p>
+
+              <div dangerouslySetInnerHTML={{ __html: html }}></div>
+            </li>
+          );
         })}
       </ol>
     </section>

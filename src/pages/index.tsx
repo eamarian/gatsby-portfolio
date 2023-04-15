@@ -11,17 +11,12 @@ import {
 
 export default (({ location }: PageProps): React.ReactElement => {
   const Padding = (): React.ReactElement => {
-    return <div style={{ padding: 70 }}></div>;
+    return <div style={{ padding: "50vh" }}></div>;
   };
 
   return (
     <Layout location={location}>
       <Hero />
-      <Padding />
-      <Padding />
-      <Padding />
-      <Padding />
-      <Padding />
       <Padding />
       <About />
       <Padding />

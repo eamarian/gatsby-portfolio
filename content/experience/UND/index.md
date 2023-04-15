@@ -1,9 +1,9 @@
 ---
-date: "2013-05-14"
-title: "BS Computer Science"
+date: "2013-08-26"
+title: "BS in Computer Science"
 company: "University of North Dakota"
 location: "Grand Forks, ND"
-range: "2013 - 2017"
+range: "Aug 2013 - May 2017"
 url: "https://und.edu/"
 ---
 

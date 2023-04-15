@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Loader, Nav, Footer } from "../components";
 
 const PATHNAME_HOME = "/";
@@ -11,6 +11,19 @@ type Props = {
 export default (({ children, location }: Props): React.ReactElement => {
   const isHome: boolean = location.pathname === PATHNAME_HOME;
   const [isLoading, setIsLoading] = useState<boolean>(isHome);
+
+  useEffect(() => {
+    if (!isLoading && location.hash) {
+      const id = location.hash.substring(1); // location.hash without the '#'
+      setTimeout(() => {
+        const el: HTMLElement | null = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView();
+          el.focus();
+        }
+      }, 0);
+    }
+  }, [isLoading]);
 
   return (
     <>
