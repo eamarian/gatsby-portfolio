@@ -2,6 +2,7 @@ export { default as Loader } from "./loader";
 export { default as Layout } from "./layout";
 export { default as Footer } from "./footer";
 export { default as Nav } from "./nav";
+export { default as Menu } from "./menu";
 export { default as About } from "./sections/about";
 export { default as Contact } from "./sections/contact";
 export { default as Experience } from "./sections/experience";

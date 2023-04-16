@@ -1,22 +1,11 @@
 import React from "react";
 import { Link } from "gatsby";
 import styled, { css } from "styled-components";
-import { navLink, navLinks } from "../config";
+import { navLinks } from "../config";
+import { Menu } from "../components";
 
 const StyledHeader = styled.header`
-  /* ${({ theme }) => theme.mixins.flexBetween}; */
-  position: fixed;
-  top: 0;
-  z-index: 11;
   padding: 0px 50px;
-  width: 100%;
-  height: var(--nav-height);
-  background-color: rgba(10, 25, 47, 0.85);
-  filter: none !important;
-  pointer-events: auto !important;
-  user-select: auto !important;
-  backdrop-filter: blur(10px);
-  transition: var(--transition);
   @media (max-width: 1080px) {
     padding: 0 40px;
   }
@@ -26,68 +15,42 @@ const StyledHeader = styled.header`
 `;
 
 const StyledNav = styled.nav`
-  /* ${({ theme }) => theme.mixins.flexBetween}; */
-  position: relative;
-  width: 100%;
-  color: var(--lightest-slate);
-  font-family: var(--font-mono);
-  counter-reset: item 0;
-  z-index: 12;
-  .logo {
-    /* ${({ theme }) => theme.mixins.flexCenter}; */
-    a {
-      color: var(--green);
-      width: 42px;
-      height: 42px;
-      &:hover,
-      &:focus {
-        svg {
-          fill: var(--green-tint);
-        }
-      }
-      svg {
-        fill: none;
-        transition: var(--transition);
-        user-select: none;
-      }
-    }
-  }
+  display: flex;
+  justify-content: space-between;
 `;
 
 const StyledLinks = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   @media (max-width: 768px) {
     display: none;
   }
   ol {
-    /* ${({ theme }) => theme.mixins.flexBetween}; */
+    display: flex;
+    justify-content: space-between;
     padding: 0;
     margin: 0;
     list-style: none;
     li {
       margin: 0 5px;
-      position: relative;
-      counter-increment: item 1;
-      font-size: var(--fz-xs);
       a {
         padding: 10px;
         &:before {
-          content: "0" counter(item) ".";
           margin-right: 5px;
-          color: var(--green);
-          font-size: var(--fz-xxs);
           text-align: right;
         }
       }
     }
   }
-  .resume-button {
-    /* ${({ theme }) => theme.mixins.smallButton}; */
-    margin-left: 15px;
-    font-size: var(--fz-xs);
-  }
 `;
+
+const Logo = (
+  <img
+    style={{ objectFit: "contain" }}
+    alt="Gatsby G Logo"
+    src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
+  />
+);
 
 type Props = {
   isHome: boolean;
@@ -97,6 +60,9 @@ export default (({ isHome }: Props): React.ReactElement => {
   return (
     <StyledHeader>
       <StyledNav>
+        <a href="/" aria-label="ome">
+          {Logo}
+        </a>
         <StyledLinks>
           <ol>
             {navLinks.map(({ url, name }, i) => (
@@ -115,6 +81,7 @@ export default (({ isHome }: Props): React.ReactElement => {
             </a>
           </div>
         </StyledLinks>
+        <Menu />
       </StyledNav>
     </StyledHeader>
   );

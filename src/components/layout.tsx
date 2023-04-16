@@ -10,7 +10,8 @@ type Props = {
 
 export default (({ children, location }: Props): React.ReactElement => {
   const isHome: boolean = location.pathname === PATHNAME_HOME;
-  const [isLoading, setIsLoading] = useState<boolean>(isHome);
+  // const [isLoading, setIsLoading] = useState<boolean>(isHome);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!isLoading && location.hash) {
