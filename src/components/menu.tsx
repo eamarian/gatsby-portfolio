@@ -76,11 +76,11 @@ export default (): React.ReactElement => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const toggleMenu = () => {
-    if (menuOpen) {
-      document.body.classList.add("no-overflow");
-    } else {
-      document.body.classList.remove("no-overflow");
-    }
+    // if (menuOpen) {
+    //   document.body.classList.add("no-overflow");
+    // } else {
+    //   document.body.classList.remove("no-overflow");
+    // }
     setMenuOpen(!menuOpen);
   };
 
