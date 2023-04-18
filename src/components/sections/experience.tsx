@@ -17,7 +17,7 @@ export default ((): React.ReactElement => {
     query {
       experience: allMarkdownRemark(
         filter: { fileAbsolutePath: { regex: "/content/experience/" } }
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { frontmatter: { date: DESC } }
       ) {
         edges {
           node {
