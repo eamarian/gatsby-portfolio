@@ -1,9 +1,6 @@
 import ScrollReveal from "scrollreveal";
 
-const isSSR: boolean = typeof window === "undefined";
-export default isSSR ? null : ScrollReveal();
-
-export const srConfig = (
+export default (
   delay = 200,
   viewFactor = 0.25
 ): scrollReveal.ScrollRevealObjectOptions => ({

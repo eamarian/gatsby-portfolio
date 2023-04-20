@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import sr, { srConfig } from "../../utils/sr";
+import srConfig from "../../utils/sr";
 import { usePrefersReducedMotion } from "../../hooks";
-import { describe } from "node:test";
 
 export default ((): React.ReactElement => {
   const revealSection: React.RefObject<HTMLElement> = useRef<HTMLElement>(null);
@@ -10,18 +9,18 @@ export default ((): React.ReactElement => {
   >([]);
   const prefersReducedMotion: boolean = usePrefersReducedMotion();
 
-  useEffect(() => {
-    if (!prefersReducedMotion && sr) {
-      if (revealSection.current) {
-        sr.reveal(revealSection.current, srConfig());
-      }
-      if (revealProjects.current) {
-        revealProjects.current.forEach((ref: HTMLLIElement, i: number) =>
-          sr.reveal(ref, srConfig(i * 100))
-        );
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!prefersReducedMotion) {
+  //     if (revealSection.current) {
+  //       ScrollReveal().reveal(revealSection.current, srConfig());
+  //     }
+  //     if (revealProjects.current) {
+  //       revealProjects.current.forEach((ref: HTMLLIElement, i: number) =>
+  //         ScrollReveal().reveal(ref, srConfig(i * 100))
+  //       );
+  //     }
+  //   }
+  // }, []);
 
   type Project = {
     title: string;

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import sr, { srConfig } from "../../utils/sr";
+import srConfig from "../../utils/sr";
 import { usePrefersReducedMotion } from "../../hooks";
 
 export default ((): React.ReactElement => {
@@ -7,9 +7,13 @@ export default ((): React.ReactElement => {
   const prefersReducedMotion: boolean = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (!prefersReducedMotion && sr && revealSection.current) {
-      sr.reveal(revealSection.current, srConfig());
+    async function animate() {
+      if (!prefersReducedMotion && revealSection.current) {
+        const ScrollReveal = (await import("scrollreveal")).default;
+        ScrollReveal().reveal(revealSection.current, srConfig());
+      }
     }
+    animate();
   }, []);
 
   return (

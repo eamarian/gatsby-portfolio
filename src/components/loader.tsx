@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import anime from "animejs";
-import { text } from "node:stream/consumers";
 
 type Props = {
   finishLoading: () => void;
