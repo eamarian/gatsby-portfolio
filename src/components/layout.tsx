@@ -1,7 +1,22 @@
 import React, { useState, useEffect } from "react";
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { Loader, Nav, Footer } from "../components";
 
 const PATHNAME_HOME = "/";
+
+const StyledContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
+
+const GlobalStyle = createGlobalStyle`
+  html {
+    box-sizing: border-box;
+    width: 100%;
+    scroll-behavior: smooth;
+  }
+`;
 
 type Props = {
   children: React.ReactNode;
@@ -28,15 +43,20 @@ export default (({ children, location }: Props): React.ReactElement => {
 
   return (
     <>
-      {isLoading && isHome ? (
-        <Loader finishLoading={() => setIsLoading(false)} />
-      ) : (
-        <>
-          <Nav />
-          <div>{children}</div>
-          <Footer />
-        </>
-      )}
+      <div id="root">
+        <GlobalStyle />
+        {isLoading && isHome ? (
+          <Loader finishLoading={() => setIsLoading(false)} />
+        ) : (
+          <StyledContent>
+            <Nav />
+            <div id="content">
+              {children}
+              <Footer />
+            </div>
+          </StyledContent>
+        )}
+      </div>
     </>
   );
 }) as React.FunctionComponent<Props>;
