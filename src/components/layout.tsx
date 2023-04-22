@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
+import type { WindowLocation } from "@reach/router";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { Loader, Nav, Footer } from "../components";
 
 const PATHNAME_HOME = "/";
 
 const StyledContent = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; */
 `;
 
 type GlobalStyleProps = {
@@ -17,18 +18,20 @@ type GlobalStyleProps = {
 const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   html {
     box-sizing: border-box;
-    width: 100%;
     scroll-behavior: smooth;
   }
 
   body{
-    overflow: ${(props) => (props.isMenuOpen ? "hidden" : "default")}
+    overflow: ${(props) => (props.isMenuOpen ? "hidden" : "default")};
+    position: ${(props) => (props.isMenuOpen ? "fixed" : "default")};
+    height: 100%;
+    width: 100%;
   }
 `;
 
 type LayoutProps = {
   children: React.ReactNode;
-  location: any; //TODO: Get this to be typed better
+  location: WindowLocation<unknown>;
 };
 
 export default (({ children, location }: LayoutProps): React.ReactElement => {

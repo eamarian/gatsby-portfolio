@@ -6,12 +6,12 @@ import { Menu } from "../components";
 
 const StyledHeader = styled.header`
   padding: 0px 50px;
-  @media (max-width: 1080px) {
+  /* @media (max-width: 1080px) {
     padding: 0 40px;
   }
   @media (max-width: 768px) {
     padding: 0 25px;
-  }
+  } */
 `;
 
 const StyledNav = styled.nav`
