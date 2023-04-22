@@ -10,23 +10,32 @@ const StyledContent = styled.div`
   min-height: 100vh;
 `;
 
-const GlobalStyle = createGlobalStyle`
+type GlobalStyleProps = {
+  isMenuOpen: boolean;
+};
+
+const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   html {
     box-sizing: border-box;
     width: 100%;
     scroll-behavior: smooth;
   }
+
+  body{
+    overflow: ${(props) => (props.isMenuOpen ? "hidden" : "default")}
+  }
 `;
 
-type Props = {
+type LayoutProps = {
   children: React.ReactNode;
   location: any; //TODO: Get this to be typed better
 };
 
-export default (({ children, location }: Props): React.ReactElement => {
+export default (({ children, location }: LayoutProps): React.ReactElement => {
   const isHome: boolean = location.pathname === PATHNAME_HOME;
   // const [isLoading, setIsLoading] = useState<boolean>(isHome);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!isLoading && location.hash) {
@@ -44,12 +53,16 @@ export default (({ children, location }: Props): React.ReactElement => {
   return (
     <>
       <div id="root">
-        <GlobalStyle />
+        <GlobalStyle isMenuOpen={isMenuOpen} />
         {isLoading && isHome ? (
           <Loader finishLoading={() => setIsLoading(false)} />
         ) : (
           <StyledContent>
-            <Nav />
+            <Nav
+              isHome={isHome}
+              isMenuOpen={isMenuOpen}
+              setIsMenuOpen={setIsMenuLoading}
+            />
             <div id="content">
               {children}
               <Footer />
@@ -59,4 +72,4 @@ export default (({ children, location }: Props): React.ReactElement => {
       </div>
     </>
   );
-}) as React.FunctionComponent<Props>;
+}) as React.FunctionComponent<LayoutProps>;

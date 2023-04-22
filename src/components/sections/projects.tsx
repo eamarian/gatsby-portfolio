@@ -9,18 +9,23 @@ export default ((): React.ReactElement => {
   >([]);
   const prefersReducedMotion: boolean = usePrefersReducedMotion();
 
-  // useEffect(() => {
-  //   if (!prefersReducedMotion) {
-  //     if (revealSection.current) {
-  //       ScrollReveal().reveal(revealSection.current, srConfig());
-  //     }
-  //     if (revealProjects.current) {
-  //       revealProjects.current.forEach((ref: HTMLLIElement, i: number) =>
-  //         ScrollReveal().reveal(ref, srConfig(i * 100))
-  //       );
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    async function animate() {
+      if (!prefersReducedMotion) {
+        if (revealSection.current) {
+          const ScrollReveal = (await import("scrollreveal")).default;
+          ScrollReveal().reveal(revealSection.current, srConfig());
+        }
+        if (revealProjects.current) {
+          const ScrollReveal = (await import("scrollreveal")).default;
+          revealProjects.current.forEach((ref: HTMLLIElement, i: number) =>
+            ScrollReveal().reveal(ref, srConfig(i * 100))
+          );
+        }
+      }
+    }
+    animate();
+  }, []);
 
   type Project = {
     title: string;

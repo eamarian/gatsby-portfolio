@@ -10,20 +10,12 @@ import {
 } from "../components";
 
 export default (({ location }: PageProps): React.ReactElement => {
-  const Padding = (): React.ReactElement => {
-    return <div style={{ padding: "50vh" }}></div>;
-  };
-
   return (
     <Layout location={location}>
       <Hero />
-      <Padding />
       <About />
-      <Padding />
       <Experience />
-      <Padding />
       <Projects />
-      <Padding />
       <Contact />
     </Layout>
   );

@@ -7,11 +7,15 @@ export default ((): React.ReactElement => {
   const revealSection: React.RefObject<HTMLElement> = useRef<HTMLElement>(null);
   const prefersReducedMotion: boolean = usePrefersReducedMotion();
 
-  // useEffect(() => {
-  //   if (!prefersReducedMotion && revealSection.current) {
-  //     ScrollReveal.reveal(revealSection.current, srConfig());
-  //   }
-  // }, []);
+  useEffect(() => {
+    async function animate() {
+      if (!prefersReducedMotion && revealSection.current) {
+        const ScrollReveal = (await import("scrollreveal")).default;
+        ScrollReveal().reveal(revealSection.current, srConfig());
+      }
+    }
+    animate();
+  }, []);
   return (
     <section id="contact" ref={revealSection}>
       <h1>Contact Me</h1>

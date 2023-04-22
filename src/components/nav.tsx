@@ -22,9 +22,9 @@ const StyledNav = styled.nav`
 const StyledLinks = styled.div`
   display: flex;
   justify-content: space-between;
-  @media (max-width: 768px) {
-    display: none;
-  }
+  /* @media (max-width: 768px) { */
+  display: none;
+  /* } */
   ol {
     display: flex;
     justify-content: space-between;
@@ -52,11 +52,17 @@ const Logo = (
   />
 );
 
-type Props = {
+type NavProps = {
   isHome: boolean;
+  isMenuOpen: boolean;
+  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default (({ isHome }: Props): React.ReactElement => {
+export default (({
+  isHome,
+  isMenuOpen,
+  setIsMenuOpen,
+}: NavProps): React.ReactElement => {
   return (
     <StyledHeader>
       <StyledNav>
@@ -81,8 +87,8 @@ export default (({ isHome }: Props): React.ReactElement => {
             </a>
           </div>
         </StyledLinks>
-        <Menu />
+        <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       </StyledNav>
     </StyledHeader>
   );
-}) as React.FunctionComponent;
+}) as React.FunctionComponent<NavProps>;
