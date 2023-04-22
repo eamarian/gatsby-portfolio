@@ -16,10 +16,14 @@ type StyledCircleProps = {
 };
 
 const StyledCircle = styled.div<StyledCircleProps>`
+  height: ${(props) => (props.isMenuOpen ? "500vh" : "0")};
+  width: ${(props) => (props.isMenuOpen ? "500vh" : "0")};
+  @media (max-aspect-ratio: 1/1) {
+    height: ${(props) => (props.isMenuOpen ? "500vw" : "0")};
+    width: ${(props) => (props.isMenuOpen ? "500vw" : "0")};
+  }
   z-index: 5;
   position: absolute;
-  height: ${(props) => (props.isMenuOpen ? "500%" : "0%")};
-  width: ${(props) => (props.isMenuOpen ? "500%" : "0%")};
   transition: height 1s ease-out, width 1s ease-out;
   left: ${(props) => props.coordinates.x};
   top: ${(props) => props.coordinates.y};
