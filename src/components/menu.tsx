@@ -195,21 +195,22 @@ export default (({
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
   };
 
-  function getRectCenter(rect: DOMRect | undefined): Coordinates {
-    if (rect) {
-      return {
-        x: rect.left + (rect.right - rect.left) / 2,
-        y: rect.top + (rect.bottom - rect.top) / 2,
-      };
-    } else {
-      return { x: 0, y: 0 };
-    }
-  }
+  // function getRectCenter(rect: DOMRect | undefined): Coordinates {
+  //   if (rect) {
+  //     return {
+  //       x: rect.left + (rect.right - rect.left) / 2,
+  //       y: rect.top + (rect.bottom - rect.top) / 2,
+  //     };
+  //   } else {
+  //     return { x: 0, y: 0 };
+  //   }
+  // }
 
-  const coordinates: Coordinates = getRectCenter(
-    buttonRef.current?.getBoundingClientRect()
-  );
-  const radius: number = calcRadius(coordinates.x, coordinates.y);
+  // const coordinates: Coordinates = getRectCenter(
+  //   buttonRef.current?.getBoundingClientRect()
+  // );
+  // const radius: number = calcRadius(coordinates.x, coordinates.y);
+  const radius: number = calcRadius(0, 0);
 
   return (
     <StyledMenu>
@@ -217,8 +218,10 @@ export default (({
         viewBox={"0 0 2 2"}
         height={2 * radius}
         width={2 * radius}
-        x={coordinates.x}
-        y={coordinates.y}
+        // x={coordinates.x}
+        // y={coordinates.y}
+        x={0}
+        y={0}
         radius={radius}
       >
         <StyledCircleSVG fill="#1f4954" ref={circleRef} cx={1} cy={1} />
