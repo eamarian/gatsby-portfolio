@@ -65,6 +65,7 @@ const StyledList = styled.ol<StyledProps>`
   transition-property: opacity;
   transition-duration: ${(props) => (props.isMenuOpen ? "1s" : "0s")};
   transition-delay: ${(props) => (props.isMenuOpen ? "0.5s" : "0s")};
+  color: white;
 `;
 
 const StyledHamburgerButton = styled.button<StyledProps>`
@@ -149,9 +150,7 @@ export default (({
     };
   }, []);
 
-  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  function toggleMenu(): void {
     if (isMenuOpen) {
       //Close Menu
       setIsMenuOpen(false);
@@ -161,7 +160,7 @@ export default (({
       setIsMenuOpen(true);
       animateMenu("#1f4954", 1, "easeOutQuart");
     }
-  };
+  }
 
   function animateMenu(fill: string, endRadius: number, easing: string) {
     const circle: SVGCircleElement | null = circleRef.current;
@@ -228,7 +227,7 @@ export default (({
         <StyledList isMenuOpen={isMenuOpen}>
           {navLinks.map(({ url, name }, i) => (
             <li key={i}>
-              <Link to={url} onClick={() => setIsMenuOpen(false)}>
+              <Link style={{ color: "white" }} to={url} onClick={toggleMenu}>
                 {name}
               </Link>
             </li>
@@ -237,7 +236,7 @@ export default (({
       </StyledModal>
       <StyledHamburgerButton
         ref={buttonRef}
-        onClick={handleClick}
+        onClick={toggleMenu}
         isMenuOpen={isMenuOpen}
       >
         <span className="ham-box-line" />
