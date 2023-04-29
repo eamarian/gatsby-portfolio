@@ -5,7 +5,7 @@ import { navLinks } from "../config";
 import { Menu } from "../components";
 
 const StyledHeader = styled.header`
-  padding: 0px 50px;
+  /* padding: 0px 50px; */
   /* @media (max-width: 1080px) {
     padding: 0 40px;
   }

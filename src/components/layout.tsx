@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     position: ${(props) => (props.isMenuOpen ? "fixed" : "default")};
     height: 100%;
     width: 100%;
+    margin: 0;
   }
 `;
 
