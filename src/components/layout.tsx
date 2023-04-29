@@ -12,7 +12,7 @@ const StyledContent = styled.div`
 `;
 
 type GlobalStyleProps = {
-  isMenuOpen: boolean;
+  menuState: MenuState;
 };
 
 const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
@@ -22,8 +22,16 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   }
 
   body{
-    overflow: ${(props) => (props.isMenuOpen ? "hidden" : "default")};
-    position: ${(props) => (props.isMenuOpen ? "fixed" : "default")};
+    overflow: ${(props) =>
+      props.menuState === MenuState.Open ||
+      props.menuState === MenuState.Opening
+        ? "hidden"
+        : "default"};
+    position: ${(props) =>
+      props.menuState === MenuState.Open ||
+      props.menuState === MenuState.Opening
+        ? "fixed"
+        : "default"};
     height: 100%;
     width: 100%;
     margin: 0;
@@ -35,11 +43,18 @@ type LayoutProps = {
   location: WindowLocation<unknown>;
 };
 
+export enum MenuState {
+  Closed = 0,
+  Opening = 1,
+  Open = 2,
+  Closing = 3,
+}
+
 export default (({ children, location }: LayoutProps): React.ReactElement => {
   const isHome: boolean = location.pathname === PATHNAME_HOME;
   // const [isLoading, setIsLoading] = useState<boolean>(isHome);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isMenuOpen, setIsMenuLoading] = useState<boolean>(false);
+  const [menuState, setMenuState] = useState<MenuState>(MenuState.Closed);
 
   useEffect(() => {
     if (!isLoading && location.hash) {
@@ -57,15 +72,15 @@ export default (({ children, location }: LayoutProps): React.ReactElement => {
   return (
     <>
       <div id="root">
-        <GlobalStyle isMenuOpen={isMenuOpen} />
+        <GlobalStyle menuState={menuState} />
         {isLoading && isHome ? (
           <Loader finishLoading={() => setIsLoading(false)} />
         ) : (
           <StyledContent>
             <Nav
               isHome={isHome}
-              isMenuOpen={isMenuOpen}
-              setIsMenuOpen={setIsMenuLoading}
+              menuState={menuState}
+              setMenuState={setMenuState}
             />
             <div id="content">
               {children}

@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import styled from "styled-components";
 import { navLinks } from "../config";
 import { Menu } from "../components";
+import type { MenuState } from "./layout";
 
 const StyledHeader = styled.header`
   /* padding: 0px 50px; */
@@ -54,14 +55,14 @@ const Logo = (
 
 type NavProps = {
   isHome: boolean;
-  isMenuOpen: boolean;
-  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  menuState: MenuState;
+  setMenuState: React.Dispatch<React.SetStateAction<MenuState>>;
 };
 
 export default (({
   isHome,
-  isMenuOpen,
-  setIsMenuOpen,
+  menuState,
+  setMenuState,
 }: NavProps): React.ReactElement => {
   return (
     <StyledHeader>
@@ -69,7 +70,7 @@ export default (({
         <a href="/" aria-label="Home">
           {Logo}
         </a>
-        <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+        <Menu menuState={menuState} setMenuState={setMenuState} />
       </StyledNav>
     </StyledHeader>
   );

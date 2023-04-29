@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "gatsby";
 import styled from "styled-components";
 import { navLinks } from "../config";
-import anime, { AnimeCallBack } from "animejs";
+import anime from "animejs";
+import { MenuState } from "./layout";
 
 const StyledMenu = styled.div`
   display: block;
@@ -12,7 +13,7 @@ type StyledSVGProps = {
   x: number;
   y: number;
   radius: number;
-  isMenuOpen: boolean;
+  menuState: MenuState;
 };
 
 const StyledSVG = styled.svg<StyledSVGProps>`
@@ -23,13 +24,15 @@ const StyledSVG = styled.svg<StyledSVGProps>`
   top: 0;
   left: 0;
   position: fixed;
-  z-index: ${(props) => (props.isMenuOpen ? 5 : -5)};
+  display: ${(props) =>
+    props.menuState !== MenuState.Closed ? "default" : "none"};
+  z-index: 10;
 `;
 
 const StyledCircleSVG = styled.circle``;
 
 type StyledProps = {
-  isMenuOpen: boolean;
+  menuState: MenuState;
 };
 
 const StyledModal = styled.div<StyledProps>`
@@ -43,27 +46,49 @@ const StyledModal = styled.div<StyledProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: ${(props) => (props.isMenuOpen ? 10 : -100)};
-  visibility: ${(props) => (props.isMenuOpen ? "1" : "0")};
-`;
-
-const StyledCanvas = styled.canvas<StyledProps>`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: block;
+  z-index: ${(props) =>
+    props.menuState === MenuState.Open || props.menuState === MenuState.Opening
+      ? 10
+      : -100};
+  visibility: ${(props) =>
+    props.menuState === MenuState.Open || props.menuState === MenuState.Opening
+      ? "1"
+      : "0"};
 `;
 
 const StyledList = styled.ol<StyledProps>`
-  opacity: ${(props) => (props.isMenuOpen ? 1 : 0)};
+  opacity: ${(props) => (props.menuState !== MenuState.Closed ? 1 : 0)};
   transition-property: opacity;
-  transition-duration: ${(props) => (props.isMenuOpen ? "1s" : "0s")};
-  transition-delay: ${(props) => (props.isMenuOpen ? "0.5s" : "0s")};
-  color: white;
+  transition-duration: ${(props) =>
+    props.menuState !== MenuState.Closed ? "1s" : "0s"};
+  transition-delay: ${(props) =>
+    props.menuState !== MenuState.Closed ? "0.5s" : "0s"};
+
+  li {
+    color: white;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    position: relative;
+
+    ::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background-color: white;
+      transform-origin: bottom left;
+      transition: transform 0.25s ease-in-out;
+    }
+    :hover::after {
+      transform: scaleX(1);
+    }
+  }
 `;
 
 const StyledHamburgerButton = styled.button<StyledProps>`
@@ -88,25 +113,49 @@ const StyledHamburgerButton = styled.button<StyledProps>`
     transition-duration: 0.22s;
 
     :first-child {
-      width: ${(props) => (props.isMenuOpen ? "100%" : "80%")};
+      width: ${(props) =>
+        props.menuState === MenuState.Open ||
+        props.menuState === MenuState.Opening
+          ? "100%"
+          : "80%"};
       transform: ${(props) =>
-        props.isMenuOpen ? "TranslateY(10px) rotate(-225deg)" : ""};
+        props.menuState === MenuState.Open ||
+        props.menuState === MenuState.Opening
+          ? "TranslateY(10px) rotate(-225deg)"
+          : ""};
     }
     :not(:first-child):not(:last-child) {
-      opacity: ${(props) => (props.isMenuOpen ? 0 : 1)};
-      transform: rotate(${(props) => (props.isMenuOpen ? "360deg" : "0deg")});
+      opacity: ${(props) =>
+        props.menuState === MenuState.Open ||
+        props.menuState === MenuState.Opening
+          ? 0
+          : 1};
+      transform: rotate(
+        ${(props) =>
+          props.menuState === MenuState.Open ||
+          props.menuState === MenuState.Opening
+            ? "360deg"
+            : "0deg"}
+      );
     }
     :last-child {
-      width: ${(props) => (props.isMenuOpen ? "100%" : "120%")};
+      width: ${(props) =>
+        props.menuState === MenuState.Open ||
+        props.menuState === MenuState.Opening
+          ? "100%"
+          : "120%"};
       transform: ${(props) =>
-        props.isMenuOpen ? "TranslateY(-10px) rotate(225deg)" : ""};
+        props.menuState === MenuState.Open ||
+        props.menuState === MenuState.Opening
+          ? "TranslateY(-10px) rotate(225deg)"
+          : ""};
     }
   }
 `;
 
 type MenuProps = {
-  isMenuOpen: boolean;
-  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  menuState: MenuState;
+  setMenuState: React.Dispatch<React.SetStateAction<MenuState>>;
 };
 
 type Coordinates = {
@@ -115,8 +164,8 @@ type Coordinates = {
 };
 
 export default (({
-  isMenuOpen,
-  setIsMenuOpen,
+  menuState,
+  setMenuState,
 }: MenuProps): React.ReactElement => {
   const [windowDimensions, setWindowDimensions] = useState<{
     height: number;
@@ -149,18 +198,27 @@ export default (({
   }, []);
 
   function toggleMenu(): void {
-    if (isMenuOpen) {
+    if (menuState === MenuState.Open || menuState === MenuState.Opening) {
+      setMenuState(MenuState.Closing);
       //Close Menu
-      setIsMenuOpen(false);
-      animateMenu("#1f4954", 0, "easeInOutQuart");
+      animateMenu("#1f4954", 0, "easeInOutQuart", () =>
+        setMenuState(MenuState.Closed)
+      );
     } else {
       //Open Menu
-      setIsMenuOpen(true);
-      animateMenu("#1f4954", 1, "easeOutQuart");
+      setMenuState(MenuState.Opening);
+      animateMenu("#1f4954", 1, "easeOutQuart", () =>
+        setMenuState(MenuState.Open)
+      );
     }
   }
 
-  function animateMenu(fill: string, endRadius: number, easing: string) {
+  function animateMenu(
+    fill: string,
+    endRadius: number,
+    easing: string,
+    complete?: () => void
+  ) {
     const circle: SVGCircleElement | null = circleRef.current;
     if (circle) {
       anime.remove(circle);
@@ -169,6 +227,7 @@ export default (({
         r: endRadius,
         duration: Math.max(endRadius / 2, 750),
         easing: easing,
+        complete: complete,
       });
     }
   }
@@ -218,15 +277,15 @@ export default (({
         x={coordinates.x}
         y={coordinates.y}
         radius={radius}
-        isMenuOpen={isMenuOpen}
+        menuState={menuState}
       >
         <StyledCircleSVG fill="#1f4954" ref={circleRef} cx={1} cy={1} />
       </StyledSVG>
-      <StyledModal isMenuOpen={isMenuOpen}>
-        <StyledList isMenuOpen={isMenuOpen}>
+      <StyledModal menuState={menuState}>
+        <StyledList menuState={menuState}>
           {navLinks.map(({ url, name }, i) => (
             <li key={i}>
-              <Link style={{ color: "white" }} to={url} onClick={toggleMenu}>
+              <Link to={url} onClick={toggleMenu}>
                 {name}
               </Link>
             </li>
@@ -236,7 +295,7 @@ export default (({
       <StyledHamburgerButton
         ref={buttonRef}
         onClick={toggleMenu}
-        isMenuOpen={isMenuOpen}
+        menuState={menuState}
       >
         <span className="ham-box-line" />
         <span className="ham-box-line" />
