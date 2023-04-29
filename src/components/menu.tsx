@@ -5,16 +5,14 @@ import { navLinks } from "../config";
 import anime, { AnimeCallBack } from "animejs";
 
 const StyledMenu = styled.div`
-  /* display: none; */
-  /* @media (max-width: 768px) { */
   display: block;
-  /* } */
 `;
 
 type StyledSVGProps = {
   x: number;
   y: number;
   radius: number;
+  isMenuOpen: boolean;
 };
 
 const StyledSVG = styled.svg<StyledSVGProps>`
@@ -25,7 +23,7 @@ const StyledSVG = styled.svg<StyledSVGProps>`
   top: 0;
   left: 0;
   position: fixed;
-  z-index: 5;
+  z-index: ${(props) => (props.isMenuOpen ? 5 : -5)};
 `;
 
 const StyledCircleSVG = styled.circle``;
@@ -196,15 +194,14 @@ export default (({
   };
 
   function getRectCenter(rect: DOMRect | undefined): Coordinates {
-    return { x: 0, y: 0 };
-    // if (rect) {
-    //   return {
-    //     x: rect.left + (rect.right - rect.left) / 2,
-    //     y: rect.top + (rect.bottom - rect.top) / 2,
-    //   };
-    // } else {
-    //   return { x: 0, y: 0 };
-    // }
+    if (rect) {
+      return {
+        x: rect.left + (rect.right - rect.left) / 2,
+        y: rect.top + (rect.bottom - rect.top) / 2,
+      };
+    } else {
+      return { x: 0, y: 0 };
+    }
   }
 
   const coordinates: Coordinates = getRectCenter(
@@ -221,6 +218,7 @@ export default (({
         x={coordinates.x}
         y={coordinates.y}
         radius={radius}
+        isMenuOpen={isMenuOpen}
       >
         <StyledCircleSVG fill="#1f4954" ref={circleRef} cx={1} cy={1} />
       </StyledSVG>

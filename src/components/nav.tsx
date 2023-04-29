@@ -66,27 +66,9 @@ export default (({
   return (
     <StyledHeader>
       <StyledNav>
-        <a href="/" aria-label="ome">
+        <a href="/" aria-label="Home">
           {Logo}
         </a>
-        <StyledLinks>
-          <ol>
-            {navLinks.map(({ url, name }, i) => (
-              <li key={i}>
-                <Link to={url}>{name}</Link>
-              </li>
-            ))}
-          </ol>
-          <div>
-            <a
-              href="/EVAN_MARIAN_RESUME.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Resume
-            </a>
-          </div>
-        </StyledLinks>
         <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       </StyledNav>
     </StyledHeader>
