@@ -6,43 +6,24 @@ import { Menu } from "../components";
 import type { MenuState } from "./layout";
 
 const StyledHeader = styled.header`
-  /* padding: 0px 50px; */
-  /* @media (max-width: 1080px) {
+  padding: 0 50px;
+  @media (max-width: 1080px) {
     padding: 0 40px;
   }
   @media (max-width: 768px) {
     padding: 0 25px;
-  } */
+  }
+  width: 100%;
+  height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const StyledNav = styled.nav`
   display: flex;
   justify-content: space-between;
-`;
-
-const StyledLinks = styled.div`
-  display: flex;
-  justify-content: space-between;
-  /* @media (max-width: 768px) { */
-  display: none;
-  /* } */
-  ol {
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    li {
-      margin: 0 5px;
-      a {
-        padding: 10px;
-        &:before {
-          margin-right: 5px;
-          text-align: right;
-        }
-      }
-    }
-  }
 `;
 
 const Logo = (
@@ -67,10 +48,10 @@ export default (({
   return (
     <StyledHeader>
       <StyledNav>
+        <Menu menuState={menuState} setMenuState={setMenuState} />
         <a href="/" aria-label="Home">
           {Logo}
         </a>
-        <Menu menuState={menuState} setMenuState={setMenuState} />
       </StyledNav>
     </StyledHeader>
   );

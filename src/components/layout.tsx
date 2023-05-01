@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import type { WindowLocation } from "@reach/router";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { Loader, Nav, Footer } from "../components";
+import "@fontsource/ubuntu/300.css";
 
 const PATHNAME_HOME = "/";
 
@@ -16,9 +17,17 @@ type GlobalStyleProps = {
 };
 
 const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+
   html {
+    background-color:#FEFBF5;
     box-sizing: border-box;
     scroll-behavior: smooth;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
   }
 
   body{
@@ -35,6 +44,8 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     height: 100%;
     width: 100%;
     margin: 0;
+    padding: 0;
+    font-family: "ubuntu";
   }
 `;
 

@@ -56,7 +56,8 @@ const StyledModal = styled.div<StyledProps>`
       : "0"};
 `;
 
-const StyledList = styled.ol<StyledProps>`
+const StyledList = styled.ul<StyledProps>`
+  list-style: none;
   opacity: ${(props) => (props.menuState !== MenuState.Closed ? 1 : 0)};
   transition-property: opacity;
   transition-duration: ${(props) =>
@@ -64,21 +65,21 @@ const StyledList = styled.ol<StyledProps>`
   transition-delay: ${(props) =>
     props.menuState !== MenuState.Closed ? "0.5s" : "0s"};
 
-  li {
-    color: white;
-  }
-
   a {
     color: white;
     text-decoration: none;
     position: relative;
+
+    h1 {
+      text-align: center;
+    }
 
     ::after {
       content: "";
       position: absolute;
       width: 100%;
       transform: scaleX(0);
-      height: 1px;
+      height: 4px;
       bottom: 0;
       left: 0;
       background-color: white;
@@ -92,7 +93,6 @@ const StyledList = styled.ol<StyledProps>`
 `;
 
 const StyledHamburgerButton = styled.button<StyledProps>`
-  /* @media (max-width: 768px) { */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -104,20 +104,19 @@ const StyledHamburgerButton = styled.button<StyledProps>`
   background-color: transparent;
   cursor: pointer;
   z-index: 20;
-  /* } */
 
   .ham-box-line {
     right: 0;
-    border: 1px solid black;
-    width: 100%;
-    transition-duration: 0.22s;
-
-    :first-child {
-      width: ${(props) =>
+    border: 1px solid
+      ${(props) =>
         props.menuState === MenuState.Open ||
         props.menuState === MenuState.Opening
-          ? "100%"
-          : "80%"};
+          ? "white"
+          : "grey"};
+    width: 100%;
+    transition-duration: 375ms;
+
+    :first-child {
       transform: ${(props) =>
         props.menuState === MenuState.Open ||
         props.menuState === MenuState.Opening
@@ -139,11 +138,6 @@ const StyledHamburgerButton = styled.button<StyledProps>`
       );
     }
     :last-child {
-      width: ${(props) =>
-        props.menuState === MenuState.Open ||
-        props.menuState === MenuState.Opening
-          ? "100%"
-          : "120%"};
       transform: ${(props) =>
         props.menuState === MenuState.Open ||
         props.menuState === MenuState.Opening
@@ -201,20 +195,15 @@ export default (({
     if (menuState === MenuState.Open || menuState === MenuState.Opening) {
       setMenuState(MenuState.Closing);
       //Close Menu
-      animateMenu("#1f4954", 0, "easeInOutQuart", () =>
-        setMenuState(MenuState.Closed)
-      );
+      animateMenu(0, "easeInOutQuart", () => setMenuState(MenuState.Closed));
     } else {
       //Open Menu
       setMenuState(MenuState.Opening);
-      animateMenu("#1f4954", 1, "easeOutQuart", () =>
-        setMenuState(MenuState.Open)
-      );
+      animateMenu(1, "easeOutQuart", () => setMenuState(MenuState.Open));
     }
   }
 
   function animateMenu(
-    fill: string,
     endRadius: number,
     easing: string,
     complete?: () => void
@@ -225,7 +214,7 @@ export default (({
       anime({
         targets: circle,
         r: endRadius,
-        duration: Math.max(endRadius / 2, 750),
+        duration: 750,
         easing: easing,
         complete: complete,
       });
@@ -283,10 +272,11 @@ export default (({
       </StyledSVG>
       <StyledModal menuState={menuState}>
         <StyledList menuState={menuState}>
+          <></>
           {navLinks.map(({ url, name }, i) => (
             <li key={i}>
               <Link to={url} onClick={toggleMenu}>
-                {name}
+                <h1>{name}</h1>
               </Link>
             </li>
           ))}
